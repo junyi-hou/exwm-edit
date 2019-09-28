@@ -116,16 +116,15 @@
       (setq exwm-edit--exwm-buffer (buffer-name))
       (if existing
           (switch-to-buffer-other-window existing)
-        (let ((buffer (get-buffer-create title)))
-          (with-current-buffer buffer
-            (run-hooks 'exwm-edit-compose-hook)
-            (exwm-edit-mode 1)
-            (insert sel)
-            (setq-local
-             header-line-format
-             (substitute-command-keys
-              "Edit, then exit with `\\[exwm-edit--finish]' or cancel with \ `\\[exwm-edit--cancel]'")))
-          (switch-to-buffer-other-window buffer))))))
+        (switch-to-buffer-other-window (get-buffer-create title))
+        (run-hooks 'exwm-edit-compose-hook)
+        (exwm-edit-mode 1)
+        (insert sel)
+        (setq-local
+         header-line-format
+         (substitute-command-keys
+          "Edit, then exit with `\\[exwm-edit--finish]' or cancel with \ `\\[exwm-edit--cancel]'")))
+          )))
 
 (exwm-input-set-key (kbd "C-c '") #'exwm-edit--compose)
 (exwm-input-set-key (kbd "C-c C-'") #'exwm-edit--compose)
